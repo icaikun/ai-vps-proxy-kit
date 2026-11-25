@@ -1,0 +1,46 @@
+# Bandwidth-conscious metacubexd / Mihomo merge template for a domestic API gateway (CPA / sub2api)
+# Uses ONLY VLESS-Reality (TCP 443) + Tailscale SOCKS5 fallback (deliberately omits Hysteria2 on capped gateways).
+
+prepend-proxies:
+  - name: VPS-Reality
+    type: vless
+    server: "<YOUR_VPS_IP>"
+    port: 443
+    uuid: "<YOUR_UUID>"
+    network: tcp
+    tls: true
+    udp: true
+    flow: xtls-rprx-vision
+    servername: www.apple.com
+    client-fingerprint: chrome
+    reality-opts:
+      public-key: "<YOUR_REALITY_PUBLIC_KEY>"
+      short-id: "<YOUR_REALITY_SHORT_ID>"
+  - name: VPS-Tailscale
+    type: socks5
+    server: "<YOUR_TAILSCALE_VPS_IP>"
+    port: 17942
+    udp: false
+
+prepend-rules:
+  - DOMAIN-SUFFIX,openai.com,AI-VPS
+  - DOMAIN-KEYWORD,openai,AI-VPS
+  - DOMAIN-SUFFIX,chatgpt.com,AI-VPS
+  - DOMAIN-SUFFIX,oaistatic.com,AI-VPS
+  - DOMAIN-SUFFIX,oaiusercontent.com,AI-VPS
+  - DOMAIN-SUFFIX,anthropic.com,AI-VPS
+  - DOMAIN-SUFFIX,claude.ai,AI-VPS
+  - DOMAIN-SUFFIX,grok.com,AI-VPS
+  - DOMAIN-SUFFIX,x.ai,AI-VPS
+  - DOMAIN-SUFFIX,gemini.google.com,AI-VPS
+  - DOMAIN-SUFFIX,generativelanguage.googleapis.com,AI-VPS
+  - DOMAIN-SUFFIX,challenges.cloudflare.com,AI-VPS
+  - DOMAIN-SUFFIX,accounts.google.com,AI-VPS
+  - DOMAIN-SUFFIX,oauth2.googleapis.com,AI-VPS
+
+append-proxy-groups:
+  - name: AI-VPS
+    type: select
+    proxies:
+      - VPS-Reality
+      - VPS-Tailscale

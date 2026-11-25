@@ -5,3 +5,7 @@ chrome-profile/
 .env
 .DS_Store
 Thumbs.db
+vps-creds.json
+__pycache__/
+*.pyc
+*flclash-phone.yaml

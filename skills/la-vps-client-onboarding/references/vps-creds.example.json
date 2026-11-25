@@ -1,0 +1,28 @@
+{
+  "la_pub_ip": "<YOUR_VPS_IP>",
+  "la_ts_ip": "<YOUR_TAILSCALE_VPS_IP>",
+  "la_ts_port": 17942,
+  "tailscale_vps_node": "la-vps",
+  "direct_domains": [
+    "example.com"
+  ],
+  "direct_check_url": "",
+  "non_ai_target": "",
+  "reality": {
+    "port": 443,
+    "uuid": "<YOUR_UUID>",
+    "flow": "xtls-rprx-vision",
+    "servername": "www.apple.com",
+    "public_key": "<YOUR_REALITY_PUBLIC_KEY>",
+    "short_id": "<YOUR_REALITY_SHORT_ID>",
+    "fingerprint": "chrome"
+  },
+  "hysteria2": {
+    "port": 443,
+    "password": "<YOUR_HY2_STRONG_PASSWORD>",
+    "sni": "bing.com",
+    "skip_cert_verify": true,
+    "up": "30 Mbps",
+    "down": "100 Mbps"
+  }
+}

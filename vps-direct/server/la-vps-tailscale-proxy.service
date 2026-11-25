@@ -1,0 +1,21 @@
+# Tailscale-only SOCKS5 fallback daemon on overseas VPS (public 0.0.0.0 is NOT exposed)
+# Install microsocks: apt-get update && apt-get install -y microsocks
+# Place at: /etc/systemd/system/la-vps-tailscale-proxy.service
+# Replace <YOUR_TAILSCALE_VPS_IP> with your VPS IP on tailscale0 (e.g., 100.64.0.x)
+
+[Unit]
+Description=VPS Tailscale-Only SOCKS5 Fallback Proxy (microsocks)
+After=network-online.target tailscaled.service
+Wants=network-online.target tailscaled.service
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sh -c 'for i in 1 2 3 4 5 6 7 8 9 10; do ip -4 addr show tailscale0 | grep -q "<YOUR_TAILSCALE_VPS_IP>" && exit 0; sleep 1; done; exit 1'
+ExecStart=/usr/bin/microsocks -i <YOUR_TAILSCALE_VPS_IP> -p 17942
+StandardOutput=null
+Restart=always
+RestartSec=2
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

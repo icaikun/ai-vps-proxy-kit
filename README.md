@@ -42,11 +42,28 @@ ai-isp-proxy-kit/
 │   └── 恢复北京时间.cmd               # 异常关闭时的时区一键兜底脚本
 ├── macos/
 │   └── start-isp-browser.sh           # macOS 纯净 Chrome 启动器（TZ 环境变量 + 防 WebRTC）
-└── server/
-    ├── mihomo-merge-template.yaml     # VPS Mihomo / metacubexd 覆写模板（含 17899 端口与防 DNS 泄漏）
-    ├── bind-isp.sh                    # VPS 一键更新/换绑静态 ISP 脚本
-    └── sub2api.env.example            # sub2api 容器加州时区与英文 Locale 环境变量示例
+├── server/
+│   ├── mihomo-merge-template.yaml     # VPS Mihomo / metacubexd 覆写模板（含 17899 端口与防 DNS 泄漏）
+│   ├── bind-isp.sh                    # VPS 一键更新/换绑静态 ISP 脚本
+│   └── sub2api.env.example            # sub2api 容器加州时区与英文 Locale 环境变量示例
+├── vps-direct/                        # [新增] 自建海外直连 VPS 多协议方案（免域名零费用）
+│   ├── README.md                      # 服务端内核 BBR 调优 + sing-box 双协议 + Tailscale 兜底部署指南
+│   ├── server/
+│   │   ├── sysctl-bbr-vps.conf        # 海外高带宽 VPS 内核调优（BBR + fq + 16MB 缓冲）
+│   │   ├── sysctl-bbr-gateway.conf    # 国内限速中转网关内核调优（BBR + fq + 8MB 防 Bufferbloat）
+│   │   ├── sing-box-config.example.json          # VLESS-Reality (TCP 443) + Hysteria2 (UDP 443) + 防 SSRF 模板
+│   │   ├── la-vps-tailscale-proxy.service        # Tailscale 内网兜底 microsocks systemd 服务模板
+│   │   └── gateway-metacubexd-merge.example.yaml # 国内中转网关省流量合并模板（仅 Reality TCP + Tailscale）
+│   └── android/
+│       └── flclash-vps-direct.example.yaml       # Android FlClash 自包含双协议 + AI/国内分流模板
+└── skills/
+    └── la-vps-client-onboarding/      # [新增] Windows / macOS 新电脑跨平台接入 Agent Skill
+        ├── SKILL.md                   # 交互式接入流程（Clash Party / Clash Verge + Tailscale 兜底）
+        ├── references/                # 双平台路径对照、排错清单与私有凭据 JSON 模板
+        └── scripts/                   # 凭据安全导出、覆写生成、跨平台热重载验收 & 无 Python Windows 执行器
 ```
+
+> **新增方案说明**：除原有的「静态住宅 ISP 链式代理」外，本仓库现已补充 **自建直连 VPS 多协议方案**（[`vps-direct/`](vps-direct/README.md)）及配套跨平台 Agent Skill（[`skills/la-vps-client-onboarding/`](skills/la-vps-client-onboarding/SKILL.md)）：支持海外 VPS 上零域名部署 `sing-box`（`VLESS-Reality TCP 443` + `Hysteria2 UDP 443`）+ `BBR/fq` 调优 + Tailscale 私有内网兜底，覆盖 **Windows / macOS（Clash Party & Clash Verge）、Android（FlClash）与国内 API 网关（省流量模式）**。
 
 ---
 
