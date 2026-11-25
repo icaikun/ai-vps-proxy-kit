@@ -33,7 +33,7 @@
 ## 2. 目录结构
 
 ```text
-ai-isp-proxy-kit/
+ai-vps-proxy-kit/
 ├── README.md
 ├── vps-direct/                                        # [主力] 自建海外直连 VPS 方案（非静态 ISP）
 │   ├── README.md                                      # 服务端 BBR 调优 + sing-box 双协议 + Tailscale 兜底完整部署手册
